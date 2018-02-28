@@ -1,0 +1,93 @@
+<div class="container-fluid upper-layer">
+  <div class="col">
+    <h1> Registration </h1>
+  </div>
+  <div class="col">
+    <h1> Registered Center </h1>
+  </div>
+</div>
+
+<div class="container lower-layer">
+  <div class="col">
+      <form [formGroup] = "register" (ngSubmit) = "sendData(register.value)">
+          <div class="form-group">
+            <label>FACILITY NAME: </label>
+            <input type="text" class="form-control" formControlName="Fname">
+            <div class="alert alert-danger" *ngIf="!register.controls['Fname'].valid && register.controls['Fname'].touched">
+                Name is Required </div>
+          </div>
+      
+          <div class="form-group">
+              <label>SERVICE TYPE: </label>
+              <select class="form-control" formControlName="servrtype">
+                <option value="">Service Type..</option>
+                <option *ngFor="let service_type of service_types" value={{service_type.service_typeID}}>{{service_type.service_typeName}}</option> 
+              </select>
+              <div class="alert alert-danger" *ngIf="!register.controls['servrtype'].valid && register.controls['servrtype'].touched">
+                Service Type is Required </div>
+            </div>
+      
+            <div class="form-group">
+                <label>SERVICE NAME: </label>
+                <select class="form-control" formControlName="servename">
+                  <option value="">Service Name..</option>
+                  <option *ngFor="let facility_name of facility_names" value={{facility_name.facilityID}}>{{facility_name.facilityName}}</option> 
+                </select>
+                <div class="alert alert-danger" *ngIf="!register.controls['servename'].valid && register.controls['servename'].touched">
+                  Service Name is Required </div>
+              </div>
+      
+              <!-- <div class="form-check">
+                <label>SELECT HEALTH INSURANCE: </label>
+                  <div> 
+                    <input class="form-check-input" type="checkbox" value="" id="nssf">
+                    <label class="form-check-label" for="nssf">
+                      NSSF
+                    </label>
+                  </div>
+      
+                  <div>
+                      <input class="form-check-input" type="checkbox" value="" id="nhif">
+                      <label class="form-check-label" for="nhif">
+                        NHIF 
+                      </label>
+                  </div>
+                    
+                </div> -->
+      
+              <div class="form-group">
+                  <input type="submit" class="btn btn-primary" value="Submit">
+                  <input type="reset" class="btn btn-success" value="reset">
+                </div>
+          
+        </form>
+        Values : {{register.value | json}} 
+  </div>
+
+
+  <div class="col">
+      <div class="table table-hover">
+          <thead>
+            <tr>
+              <td>S/No</td>
+              <td>SERVICE NAME</td>
+              <td>FACILITY NAME</td>
+              <td>SERVICE TYPE</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let serve of serves">
+              <td>{{ serve.	serviceID}}</td>
+              <td>{{ serve.serviceName}}</td>
+              <td>{{ serve.service_typeID }}</td>
+              <td>{{ serve.facilityID }}</td> 
+              <td>
+                  <button class="btn btn-danger" (click)="delete_data(serve.serviceID)">Delete</button>
+                  <button class="btn btn-success">Update</button>
+              </td>
+            </tr>
+          </tbody>
+        </div>
+        
+  </div>
+</div>
